@@ -18,15 +18,12 @@ void Simulador::run(std::vector<Objeto> objetos) {
     for (const auto& objeto : objetos) {
         double t = 0.0;
         double x, y;
-        
-        do {
+        do { 
             x = objeto.x0 + objeto.v0 * cos(objeto.alpha) * t * objeto.d_dir;
             y = objeto.h + objeto.v0 * sin(objeto.alpha) * t - 0.5 * gravity * t * t;
-            
             std::cout << "x: " << x << ", y: " << y << std::endl;
-            
-            t += 0.1;
-        } while (y > 0.0);
+            t += 0.01;
+        } while (y > 0.0); // Mientras que no toque el suelo 
     }
 }
 

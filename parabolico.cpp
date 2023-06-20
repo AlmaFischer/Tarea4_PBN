@@ -1,5 +1,3 @@
-#include <iostream>
-#include <cmath>
 #include "parabolico.h"
 
 Objeto::Objeto(double dia, double vo, double xo, double height, double alphas, int dir) {

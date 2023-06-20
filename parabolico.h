@@ -2,6 +2,8 @@
 #define PARABOLICO_H
 
 #include <vector>
+#include <cmath>
+#include <iostream>
 
 class Objeto {
 public:

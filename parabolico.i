@@ -2,11 +2,10 @@
 
 %{
 #include "parabolico.h"
-#include <vector>
-#include <cmath>
 %}
-
-%include "std_vector.i"
 %include "parabolico.h"
-
-%template(VectorObjeto) std::vector<Objeto>;
+%include "std_string.i"
+%include "std_vector.i"
+namespace std {
+    %template(vecObjecto) vector<Objeto>;
+};

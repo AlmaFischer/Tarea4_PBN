@@ -15,28 +15,29 @@ Simulador::Simulador(double g) {
 }
 
 void Simulador::run(std::vector<Objeto> objetos) {
-    for (const auto& objeto : objetos) {
+    for (const auto& objeto : objetos) { // Algo nuevo (: 
         double t = 0.0;
-        double x, y;
+        double x,y;
+        double angulo_objeto_rad = objeto.alpha*(M_PI/180);
         do { 
-            x = objeto.x0 + objeto.v0 * cos(objeto.alpha) * t * objeto.d_dir;
-            y = objeto.h + objeto.v0 * sin(objeto.alpha) * t - 0.5 * gravity * t * t;
+            x = objeto.x0 + objeto.v0 * cos(angulo_objeto_rad) * t * objeto.d_dir;
+            y = objeto.h + objeto.v0 * sin(angulo_objeto_rad) * t - 0.5 * gravity * t * t; // CAMBIAR ANGULO A RADIANES XD
             std::cout << "x: " << x << ", y: " << y << std::endl;
-            t += 0.01;
+            t += 0.1; //Vamos de 0.1 para que sea mas preciso
         } while (y > 0.0); // Mientras que no toque el suelo 
     }
 }
 
 bool Simulador::collide(Objeto o1, Objeto o2) {
-    double t1 = 0.0;
-    double t2 = 0.0;
-    
+    double t = 0.0;
+    double angulo_o1_rad = o1.alpha*(M_PI/180);
+    double angulo_o2_rad = o2.alpha*(M_PI/180);
     while (true) {
-        double x1 = o1.x0 + o1.v0 * cos(o1.alpha) * t1 * o1.d_dir;
-        double y1 = o1.h + o1.v0 * sin(o1.alpha) * t1 - 0.5 * gravity * t1 * t1;
+        double x1 = o1.x0 + o1.v0 * cos(angulo_o1_rad) * t * o1.d_dir;
+        double y1 = o1.h + o1.v0 * sin(angulo_o1_rad) * t - 0.5 * gravity * t * t;
         
-        double x2 = o2.x0 + o2.v0 * cos(o2.alpha) * t2 * o2.d_dir;
-        double y2 = o2.h + o2.v0 * sin(o2.alpha) * t2 - 0.5 * gravity * t2 * t2;
+        double x2 = o2.x0 + o2.v0 * cos(angulo_o2_rad) * t * o2.d_dir;
+        double y2 = o2.h + o2.v0 * sin(angulo_o2_rad) * t - 0.5 * gravity * t * t;
         
         if (std::abs(x1 - x2) < 0.001 && std::abs(y1 - y2) < 0.001) {
             return true; // Colisión detectada
@@ -46,17 +47,16 @@ bool Simulador::collide(Objeto o1, Objeto o2) {
             return false; // No hay colisión antes de tocar el suelo
         }
         
-        t1 += 0.1;
-        t2 += 0.1;
+        t += 0.1;
     }
 }
 
 double Simulador::distance(Objeto o1) {
     double t = 0.0;
-    
+    double angulo_o1_rad = o1.alpha*(M_PI/180);
     while (true) {
-        double x = o1.x0 + o1.v0 * cos(o1.alpha) * t * o1.d_dir;
-        double y = o1.h + o1.v0 * sin(o1.alpha) * t - 0.5 * gravity * t * t;
+        double x = o1.x0 + o1.v0 * cos(angulo_o1_rad) * t * o1.d_dir;
+        double y = o1.h + o1.v0 * sin(angulo_o1_rad) * t - 0.5 * gravity * t * t;
         
         if (y <= 0.0) {
             return x; // Distancia alcanzada en el eje x al tocar el suelo

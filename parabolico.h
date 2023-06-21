@@ -2,7 +2,7 @@
 #define PARABOLICO_H
 
 #include <vector>
-#include <cmath>
+#include <math.h>
 #include <iostream>
 
 class Objeto {

@@ -2,7 +2,7 @@ from parabolico import *
 s=Simulador(9.81)
 obj1 = Objeto(5,10,0,5,45,1)
 obj2 = Objeto(12,1,10,10,30,-1)
-obj3 = Objeto(20,1,3,4,5,1)
+obj3 = Objeto(20,10,100,50,45,-1)
 r=s.run([obj1,obj2,obj3])
 c=s.collide(obj1,obj3)
 d=s.distance(obj1)

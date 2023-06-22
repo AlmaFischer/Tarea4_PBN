@@ -35,6 +35,8 @@ bool Simulador::collide(Objeto o1, Objeto o2) {
     double t = 0.0;
     double angulo_o1_rad = o1.alpha*(M_PI/180);
     double angulo_o2_rad = o2.alpha*(M_PI/180);
+    double d_o1_metros = o1.d/100;
+    double d_o2_metros = o2.d/100; // En el foro el ayudante dijo que el diametro estaba en centimetros entnces lo dividimos en 100
     while (true) {
         double x1 = o1.x0 + o1.v0 * cos(angulo_o1_rad) * t * o1.d_dir;
         double y1 = o1.h + o1.v0 * sin(angulo_o1_rad) * t - 0.5 * gravity * t * t;
@@ -42,7 +44,7 @@ bool Simulador::collide(Objeto o1, Objeto o2) {
         double x2 = o2.x0 + o2.v0 * cos(angulo_o2_rad) * t * o2.d_dir;
         double y2 = o2.h + o2.v0 * sin(angulo_o2_rad) * t - 0.5 * gravity * t * t;
 
-        double distancia_minima = (o1.d + o2.d) / 2.0;
+        double distancia_minima = (d_o1_metros + d_o2_metros) / 2.0;
         double distancia_actual = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
         
         if (distancia_actual<=distancia_minima) {

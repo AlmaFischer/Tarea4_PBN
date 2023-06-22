@@ -5,6 +5,12 @@
 #include <math.h>
 #include <iostream>
 
+struct Resultado {
+    double t;
+    double x;
+    double y;
+};
+
 class Objeto {
 public:
     double d;    // diámetro del objeto
@@ -23,7 +29,7 @@ private:
 
 public:
     Simulador(double g);
-    void run(std::vector<Objeto> objetos);
+    std::vector<Resultado> run(std::vector<Objeto> objetos);
     bool collide(Objeto o1, Objeto o2);
     double distance(Objeto o1);
 };

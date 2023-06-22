@@ -14,19 +14,22 @@ Simulador::Simulador(double g) {
     gravity = g;
 }
 
-void Simulador::run(std::vector<Objeto> objetos) {
-    for (const auto& objeto : objetos) { // Algo nuevo (: 
+std::vector<Resultado> Simulador::run(std::vector<Objeto> objetos) {
+    std::vector<Resultado> resultados;
+    for (const auto& objeto : objetos) {
         double t = 0.0;
-        double x,y;
-        double angulo_objeto_rad = objeto.alpha*(M_PI/180);
-        do { 
+        double x, y;
+        double angulo_objeto_rad = objeto.alpha * (M_PI / 180);
+        do {
             x = objeto.x0 + objeto.v0 * cos(angulo_objeto_rad) * t * objeto.d_dir;
-            y = objeto.h + objeto.v0 * sin(angulo_objeto_rad) * t - 0.5 * gravity * t * t; // CAMBIAR ANGULO A RADIANES XD
-            std::cout << "x: " << x << ", y: " << y << std::endl;
-            t += 0.1; //Vamos de 0.1 para que sea mas preciso
-        } while (y > 0.0); // Mientras que no toque el suelo 
+            y = objeto.h + objeto.v0 * sin(angulo_objeto_rad) * t - 0.5 * gravity * t * t;
+            resultados.push_back({t, x, y});
+            t += 0.1;
+        } while (y > 0.0);
     }
+    return resultados;
 }
+
 
 bool Simulador::collide(Objeto o1, Objeto o2) {
     double t = 0.0;
@@ -38,8 +41,11 @@ bool Simulador::collide(Objeto o1, Objeto o2) {
         
         double x2 = o2.x0 + o2.v0 * cos(angulo_o2_rad) * t * o2.d_dir;
         double y2 = o2.h + o2.v0 * sin(angulo_o2_rad) * t - 0.5 * gravity * t * t;
+
+        double distancia_minima = (o1.d + o2.d) / 2.0;
+        double distancia_actual = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
         
-        if (std::abs(x1 - x2) < 0.001 && std::abs(y1 - y2) < 0.001) {
+        if (distancia_actual<=distancia_minima) {
             return true; // Colisión detectada
         }
         

@@ -8,5 +8,6 @@
 
 namespace std {
     %template(VectorObjeto) vector<Objeto>;
+    %template(VectorResultado) vector<Resultado>;
 }
 %include "parabolico.h"
